@@ -29,6 +29,7 @@
 | 模型自声明注意力范围 + block table 重写 | DA | **未验证，数字存疑** | 声称 attended tokens 减少 31–52%，精度降 1.27–2.75pp | wall-clock 为 roofline 估算而非实测，且排除 prefill；global 模式占 80%+ attended tokens 且随上下文增长；多跑约 33% decode step；不兼容 thinking mode；小模型完全失效；无 batching 实验；无代码 | 评估 2026-09-05 |
 | hook attention metadata builder 改写 block table（作为集成路径） | DA | **有效的集成方式** | 不改 kernel、不改 scheduler；vLLM V1 有 `supports_update_block_table` 原生路径 | 这是对「集成成本」的判定，与该方法本身的收益无关 | 评估 2026-09-05 |
 | Leech 格多壳解码 + 展开式 VRAM 布局（2-bit 权重） | LLVQ | **不实用** | L40S 上 2.15× vs FP16，但 **MMLU 掉 14.7 点**、perplexity ×1.384 | 论文自陈 QTIP 2-bit 读少 2.40× 字节且快 2.27×；A100 上「every lattice arm falls below FP16」；目标场景 70B 未测 | 评估 2026-09-05 |
+| 聚合状态代替两两交互建模（多模型共享 GPU 的性能预测） | MeanField | **未验证，思路合理** | profiling 成本从 O(k^N) 降到 O(N·k)，R²≈0.96，达标样本量约 n*≈20N | 把 LLM 当黑盒：不区分 prefill/decode、不建模 KV cache——而这正是 LLM serving 性能的主导因素；GA 搜索期间假设 GPU 聚合状态固定；单卡 N≤6；无代码 | 评估 2026-09-05 |
 
 ## 方法论笔记
 
@@ -51,6 +52,7 @@
 | [CRISP: Cliff-awaRe Input-adaptive Sparse Prefilling](https://arxiv.org/abs/2609.01925)<br/>Adobe Research, EMNLP 2026 | 仅评估 | [`triage/crisp-2609.01925.md`](triage/crisp-2609.01925.md) | 无代码无引擎集成；attention-only 单序列口径；产业界已转向原生稀疏注意力（DSA） |
 | [Language Models Can Control Their Own Attention](https://arxiv.org/abs/2609.02737)<br/>KAIST AI + Google DeepMind, 2026 | 仅评估 | [`triage/da-2609.02737.md`](triage/da-2609.02737.md) | 集成路径是看过最干净的，但收益全是 roofline 估算，且上下文越长节省越少 |
 | [Unfolding the Leech Lattice（2-bit 量化）](https://arxiv.org/abs/2609.02652)<br/>Scub, 2026, preprint | 仅评估 | [`triage/llvq-2609.02652.md`](triage/llvq-2609.02652.md) | 方法不实用（MMLU 掉 14.7 点、换卡即失效、输给 QTIP），但论文的方法论严谨度是评估过的所有论文中最高的 |
+| [MeanField Surrogate Modeling for Runtime Scheduling](https://arxiv.org/abs/2609.02109)<br/>首尔大学, 2026 | 仅评估 | [`triage/meanfield-2609.02109.md`](triage/meanfield-2609.02109.md) | 问题真实、建模简化合理，但把 LLM 当黑盒——不区分 prefill/decode、不建模 KV cache |
 
 ## 说明
 
