@@ -1,0 +1,193 @@
++ ../.venv/bin/python llm_rerank.py --mode hllm --head attn --loss ce --out results/llm_hllm_ce.json
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights: 100%|██████████| 311/311 [00:00<00:00, 4764.60it/s]
+/home/Kei/arxiv-replay/hllm/llm_rerank.py:93: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(layer, layers)
+mode=hllm  head=attn  loss=ce  LoRA trainable 4.59 M
+train 9386  eval 494  topk 10
+head params 4.76 M
+  ep0 step 200 loss(ema) 3.9740 (0.196s/step)
+  ep0 step 400 loss(ema) 3.7467 (0.203s/step)
+  ep0 step 600 loss(ema) 3.2599 (0.205s/step)
+  ep0 step 800 loss(ema) 3.1915 (0.205s/step)
+  ep0 step 1000 loss(ema) 3.2606 (0.206s/step)
+  ep0 step 1200 loss(ema) 2.9055 (0.206s/step)
+  ep0 step 1400 loss(ema) 3.0483 (0.207s/step)
+  ep0 step 1600 loss(ema) 3.1619 (0.206s/step)
+  ep0 step 1800 loss(ema) 3.2384 (0.207s/step)
+  ep0 step 2000 loss(ema) 3.2348 (0.207s/step)
+  ep0 step 2200 loss(ema) 2.8602 (0.207s/step)
+  ep0 step 2400 loss(ema) 3.3197 (0.207s/step)
+  ep0 step 2600 loss(ema) 3.2626 (0.208s/step)
+  ep0 step 2800 loss(ema) 3.0135 (0.208s/step)
+  ep0 step 3000 loss(ema) 2.9607 (0.208s/step)
+  ep0 step 3200 loss(ema) 3.0838 (0.208s/step)
+  ep0 step 3400 loss(ema) 3.1973 (0.208s/step)
+  ep0 step 3600 loss(ema) 2.9688 (0.208s/step)
+  ep0 step 3800 loss(ema) 3.0024 (0.208s/step)
+  ep0 step 4000 loss(ema) 3.0779 (0.208s/step)
+  ep0 step 4200 loss(ema) 2.8987 (0.208s/step)
+  ep0 step 4400 loss(ema) 2.9021 (0.208s/step)
+  ep0 step 4600 loss(ema) 3.1301 (0.208s/step)
+  ep0 step 4800 loss(ema) 3.3431 (0.208s/step)
+  ep0 step 5000 loss(ema) 3.1394 (0.208s/step)
+  ep0 step 5200 loss(ema) 3.2914 (0.207s/step)
+  ep0 step 5400 loss(ema) 2.7651 (0.207s/step)
+  ep0 step 5600 loss(ema) 2.9809 (0.212s/step)
+  ep0 step 5800 loss(ema) 2.3281 (0.220s/step)
+  ep0 step 6000 loss(ema) 2.8778 (0.219s/step)
+  ep0 step 6200 loss(ema) 2.7598 (0.219s/step)
+  ep0 step 6400 loss(ema) 2.9593 (0.218s/step)
+  ep0 step 6600 loss(ema) 2.9224 (0.218s/step)
+  ep0 step 6800 loss(ema) 2.9303 (0.218s/step)
+  ep0 step 7000 loss(ema) 2.7912 (0.218s/step)
+  ep0 step 7200 loss(ema) 3.1131 (0.217s/step)
+  ep0 step 7400 loss(ema) 2.5567 (0.217s/step)
+  ep0 step 7600 loss(ema) 3.0487 (0.217s/step)
+  ep0 step 7800 loss(ema) 3.1207 (0.216s/step)
+  ep0 step 8000 loss(ema) 3.0334 (0.216s/step)
+  ep0 step 8200 loss(ema) 2.6095 (0.216s/step)
+  ep0 step 8400 loss(ema) 2.9708 (0.216s/step)
+  ep0 step 8600 loss(ema) 2.6019 (0.216s/step)
+  ep0 step 8800 loss(ema) 3.1332 (0.220s/step)
+  ep0 step 9000 loss(ema) 2.9711 (0.220s/step)
+  ep0 step 9200 loss(ema) 2.5964 (0.220s/step)
+
+hllm + hungarian (topk=10)
+  R@1     0.2874
+  R@10   0.4413
+  NDCG@10 0.3465
+  latency median 80.8 ms   mean 82.3 ms
+  of which solver: 0.0524 ms (0.065%)
+  legal permutation: 100.0%
+
+hllm + argsort (same matrix, no solver)
+  R@1     0.2854
+  R@10   0.6457
+  NDCG@10 0.4531
+  latency median 80.7 ms   mean 82.3 ms
+  legal permutation: 100.0%
++ ../.venv/bin/python llm_rerank.py --mode hllm --head attn --loss sinkhorn --out results/llm_hllm_sinkhorn.json
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights: 100%|██████████| 311/311 [00:00<00:00, 7036.74it/s]
+/home/Kei/arxiv-replay/hllm/llm_rerank.py:93: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.enc = nn.TransformerEncoder(layer, layers)
+mode=hllm  head=attn  loss=sinkhorn  LoRA trainable 4.59 M
+train 9386  eval 494  topk 10
+head params 4.76 M
+  ep0 step 200 loss(ema) 4.2247 (0.228s/step)
+  ep0 step 400 loss(ema) 3.7614 (0.225s/step)
+  ep0 step 600 loss(ema) 3.3309 (0.223s/step)
+  ep0 step 800 loss(ema) 3.2115 (0.222s/step)
+  ep0 step 1000 loss(ema) 3.3014 (0.221s/step)
+  ep0 step 1200 loss(ema) 2.9572 (0.220s/step)
+  ep0 step 1400 loss(ema) 3.0511 (0.220s/step)
+  ep0 step 1600 loss(ema) 3.2023 (0.219s/step)
+  ep0 step 1800 loss(ema) 3.2326 (0.219s/step)
+  ep0 step 2000 loss(ema) 3.2315 (0.218s/step)
+  ep0 step 2200 loss(ema) 2.8499 (0.218s/step)
+  ep0 step 2400 loss(ema) 3.3582 (0.218s/step)
+  ep0 step 2600 loss(ema) 3.2196 (0.218s/step)
+  ep0 step 2800 loss(ema) 3.0264 (0.218s/step)
+  ep0 step 3000 loss(ema) 2.9385 (0.218s/step)
+  ep0 step 3200 loss(ema) 3.1284 (0.217s/step)
+  ep0 step 3400 loss(ema) 3.2125 (0.216s/step)
+  ep0 step 3600 loss(ema) 2.9422 (0.216s/step)
+  ep0 step 3800 loss(ema) 3.0173 (0.216s/step)
+  ep0 step 4000 loss(ema) 3.0687 (0.216s/step)
+  ep0 step 4200 loss(ema) 2.8781 (0.217s/step)
+  ep0 step 4400 loss(ema) 2.9114 (0.217s/step)
+  ep0 step 4600 loss(ema) 3.1512 (0.218s/step)
+  ep0 step 4800 loss(ema) 3.3534 (0.218s/step)
+  ep0 step 5000 loss(ema) 3.1655 (0.218s/step)
+  ep0 step 5200 loss(ema) 3.3386 (0.218s/step)
+  ep0 step 5400 loss(ema) 2.8202 (0.219s/step)
+  ep0 step 5600 loss(ema) 2.9686 (0.219s/step)
+  ep0 step 5800 loss(ema) 2.3644 (0.219s/step)
+  ep0 step 6000 loss(ema) 2.8861 (0.219s/step)
+  ep0 step 6200 loss(ema) 2.7609 (0.219s/step)
+  ep0 step 6400 loss(ema) 2.9547 (0.219s/step)
+  ep0 step 6600 loss(ema) 2.8999 (0.219s/step)
+  ep0 step 6800 loss(ema) 2.9319 (0.219s/step)
+  ep0 step 7000 loss(ema) 2.8265 (0.219s/step)
+  ep0 step 7200 loss(ema) 3.1169 (0.220s/step)
+  ep0 step 7400 loss(ema) 2.5772 (0.220s/step)
+  ep0 step 7600 loss(ema) 3.0094 (0.220s/step)
+  ep0 step 7800 loss(ema) 3.0890 (0.220s/step)
+  ep0 step 8000 loss(ema) 3.1145 (0.220s/step)
+  ep0 step 8200 loss(ema) 2.6579 (0.219s/step)
+  ep0 step 8400 loss(ema) 2.9577 (0.219s/step)
+  ep0 step 8600 loss(ema) 2.6578 (0.219s/step)
+  ep0 step 8800 loss(ema) 3.1367 (0.218s/step)
+  ep0 step 9000 loss(ema) 2.9971 (0.218s/step)
+  ep0 step 9200 loss(ema) 2.5935 (0.217s/step)
+
+hllm + hungarian (topk=10)
+  R@1     0.2814
+  R@10   0.3927
+  NDCG@10 0.3240
+  latency median 71.3 ms   mean 72.9 ms
+  of which solver: 0.0514 ms (0.072%)
+  legal permutation: 100.0%
+
+hllm + argsort (same matrix, no solver)
+  R@1     0.2854
+  R@10   0.6417
+  NDCG@10 0.4502
+  latency median 71.2 ms   mean 72.8 ms
+  legal permutation: 100.0%
++ ../.venv/bin/python llm_rerank.py --mode ar --out results/llm_ar.json
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights: 100%|██████████| 311/311 [00:00<00:00, 7658.29it/s]
+mode=ar  head=attn  loss=ce  LoRA trainable 4.59 M
+train 9386  eval 494  topk 10
+  ep0 step 200 loss(ema) 1.3052 (0.175s/step)
+  ep0 step 400 loss(ema) 1.2583 (0.172s/step)
+  ep0 step 600 loss(ema) 1.1790 (0.171s/step)
+  ep0 step 800 loss(ema) 1.1673 (0.171s/step)
+  ep0 step 1000 loss(ema) 1.1835 (0.171s/step)
+  ep0 step 1200 loss(ema) 1.0501 (0.171s/step)
+  ep0 step 1400 loss(ema) 1.0905 (0.173s/step)
+  ep0 step 1600 loss(ema) 1.1519 (0.172s/step)
+  ep0 step 1800 loss(ema) 1.1840 (0.172s/step)
+  ep0 step 2000 loss(ema) 1.1593 (0.172s/step)
+  ep0 step 2200 loss(ema) 1.0682 (0.172s/step)
+  ep0 step 2400 loss(ema) 1.2365 (0.172s/step)
+  ep0 step 2600 loss(ema) 1.1810 (0.172s/step)
+  ep0 step 2800 loss(ema) 1.0607 (0.172s/step)
+  ep0 step 3000 loss(ema) 1.0735 (0.172s/step)
+  ep0 step 3200 loss(ema) 1.1448 (0.172s/step)
+  ep0 step 3400 loss(ema) 1.0663 (0.171s/step)
+  ep0 step 3600 loss(ema) 1.0307 (0.172s/step)
+  ep0 step 3800 loss(ema) 1.1080 (0.172s/step)
+  ep0 step 4000 loss(ema) 1.0445 (0.172s/step)
+  ep0 step 4200 loss(ema) 1.0374 (0.172s/step)
+  ep0 step 4400 loss(ema) 1.0795 (0.172s/step)
+  ep0 step 4600 loss(ema) 1.1074 (0.171s/step)
+  ep0 step 4800 loss(ema) 1.1675 (0.171s/step)
+  ep0 step 5000 loss(ema) 1.1261 (0.171s/step)
+  ep0 step 5200 loss(ema) 1.1195 (0.171s/step)
+  ep0 step 5400 loss(ema) 0.9918 (0.171s/step)
+  ep0 step 5600 loss(ema) 1.0886 (0.171s/step)
+  ep0 step 5800 loss(ema) 0.8701 (0.171s/step)
+  ep0 step 6000 loss(ema) 0.9605 (0.171s/step)
+  ep0 step 6200 loss(ema) 0.9919 (0.171s/step)
+  ep0 step 6400 loss(ema) 0.9982 (0.171s/step)
+  ep0 step 6600 loss(ema) 1.0905 (0.171s/step)
+  ep0 step 6800 loss(ema) 1.0011 (0.172s/step)
+  ep0 step 7000 loss(ema) 0.9675 (0.172s/step)
+  ep0 step 7200 loss(ema) 1.0911 (0.172s/step)
+  ep0 step 7400 loss(ema) 0.8984 (0.172s/step)
+  ep0 step 7600 loss(ema) 1.0599 (0.172s/step)
+  ep0 step 7800 loss(ema) 1.1106 (0.172s/step)
+  ep0 step 8000 loss(ema) 1.0741 (0.172s/step)
+  ep0 step 8200 loss(ema) 0.9792 (0.172s/step)
+  ep0 step 8400 loss(ema) 1.0435 (0.172s/step)
+  ep0 step 8600 loss(ema) 0.9597 (0.172s/step)
+  ep0 step 8800 loss(ema) 1.1083 (0.172s/step)
+  ep0 step 9000 loss(ema) 1.0403 (0.172s/step)
+  ep0 step 9200 loss(ema) 0.9390 (0.172s/step)
+
+ar + hungarian (topk=10)
+  R@1     0.2126
+  R@10   0.4170
+  NDCG@10 0.2936
+  latency median 1568.5 ms   mean 1569.2 ms
+  legal permutation: 2.6%

@@ -1,5 +1,17 @@
+# CPU experiments (e1-e5)
 numpy>=2.0
 scipy>=1.14
-torch>=2.4        # CPU build is enough: pip install --index-url https://download.pytorch.org/whl/cpu torch
 lap>=0.5          # dedicated LAPJV, used in e1b
 lapjv>=1.3        # second LAPJV implementation, used in e1b
+torch>=2.4        # CPU build is enough for e4:
+                  #   pip install --index-url https://download.pytorch.org/whl/cpu torch
+
+# LLM experiment (llm_rerank.py) -- needs a CUDA GPU, ~5 GB
+# torch CUDA build instead of the CPU one:
+#   pip install --index-url https://download.pytorch.org/whl/cu126 torch
+transformers>=5.0
+peft>=0.20
+accelerate>=1.0
+pandas>=2.0
+pyarrow>=15.0
+socksio            # only if you are behind a SOCKS proxy

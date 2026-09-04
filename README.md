@@ -14,9 +14,9 @@
 
 ## 目录
 
-| 目录 | 论文 | 一句话结论 |
-|---|---|---|
-| [`hllm/`](hllm/) | [hLLM: Single Pass Decoding for Generative Reranking](https://arxiv.org/abs/2609.01807) (Meta, 2026) | 求解器开销的数字可信，64× 加速比的分母站不住；组合优化解码的质量增益真实但仅 +0.83% |
+| 目录 | 论文 | 状态 | 一句话结论 |
+|---|---|---|---|
+| [`hllm/`](hllm/) | [hLLM: Single Pass Decoding for Generative Reranking](https://arxiv.org/abs/2609.01807) (Meta, 2026) | 已归档 | 有效的部分（prefill-only 解码）是 vLLM 早有的成熟能力，论文冠名的匈牙利指派实测无效 |
 
 ## License
 
