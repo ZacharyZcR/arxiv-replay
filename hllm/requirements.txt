@@ -1,0 +1,5 @@
+numpy>=2.0
+scipy>=1.14
+torch>=2.4        # CPU build is enough: pip install --index-url https://download.pytorch.org/whl/cpu torch
+lap>=0.5          # dedicated LAPJV, used in e1b
+lapjv>=1.3        # second LAPJV implementation, used in e1b

@@ -1,0 +1,20 @@
+seed 0 ...
+seed 1 ...
+seed 2 ...
+
+3 seeds, N=20, 8000 train / 2000 test slates, 20 epochs, relevance noise 1.5
+
+                 config         NDCG@10          NDCG@5            R@1  decode_ms  assign_obj
+  A pointwise + argsort   0.9391+-0.0152  0.9305+-0.0184  0.5792+-0.0663     0.0002         nan
+   B matrix + hungarian   0.9469+-0.0135  0.9415+-0.0154  0.6267+-0.0571     0.0073      40.385
+     C matrix + argsort   0.4503+-0.0168  0.3794+-0.0167  0.0003+-0.0005     0.0006       8.825
+  D matrix + top-column   0.9015+-0.0172  0.9367+-0.0141  0.6253+-0.0556     0.0002      31.248
+      E matrix + greedy   0.9413+-0.0120  0.9405+-0.0145  0.6253+-0.0556     0.0298      33.727
+
+B and E decode to the identical permutation on 0.0% of slates
+
+paired NDCG@10 over 6000 slates (all seeds pooled)
+  B - A: delta +0.0078 [95% CI +0.0071, +0.0085]  t=   21.23  p=1.64e-96
+  B - C: delta +0.4967 [95% CI +0.4935, +0.4998]  t=  306.07  p=0.00e+00
+  B - D: delta +0.0454 [95% CI +0.0439, +0.0469]  t=   59.21  p=0.00e+00
+  B - E: delta +0.0056 [95% CI +0.0050, +0.0062]  t=   18.01  p=1.16e-70

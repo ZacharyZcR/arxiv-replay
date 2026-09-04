@@ -1,0 +1,17 @@
+Rank-1 signal + iid cell noise. N=50, 2000 slates each.
+
+ sigma |           NDCG@10 |             R@1 | identical
+       |     hung  argsort |    hung argsort |
+----------------------------------------------------------
+  0.00 |   0.3754   0.3754 |  0.1700  0.1700 |   100.0%
+  0.01 |   0.3735   0.3849 |  0.1680  0.1850 |     0.0%
+  0.05 |   0.3196   0.3750 |  0.1035  0.1710 |     0.0%
+  0.10 |   0.3099   0.3766 |  0.0990  0.1730 |     0.0%
+  0.20 |   0.2642   0.3722 |  0.0715  0.1740 |     0.0%
+  0.30 |   0.2487   0.3676 |  0.0655  0.1690 |     0.0%
+  0.50 |   0.2051   0.3762 |  0.0415  0.1790 |     0.0%
+  1.00 |   0.1668   0.3584 |  0.0420  0.1645 |     0.0%
+
+Item-independent head: M_ij = u_i, no position variation.
+  objective of Hungarian vs a random permutation, max gap: 0.00e+00
+  -> every permutation ties; the solver's output carries no ranking information.

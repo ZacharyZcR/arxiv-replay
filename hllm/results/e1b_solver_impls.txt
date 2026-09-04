@@ -1,0 +1,17 @@
+median solve time (ms), cost-minimisation on iid uniform matrices
+
+     N   scipy_mJV      lap_JV   lapjv_cpp    paper
+    50      0.0377      0.0180      0.0152    0.008
+   100      0.1752      0.0876      0.0593        -
+   150      0.3881      0.2079      0.1358        -
+   250      1.2491      0.7010      0.5636        -
+   500      4.9513      1.8301      1.7087        -
+  1000     28.8329     14.2645     13.7461        -
+
+Fastest implementation as a share of the paper's 28 ms budget:
+  N=   50:   0.0155 ms  (  0.055% of 28 ms)
+  N=  100:   0.0545 ms  (  0.195% of 28 ms)
+  N=  150:   0.1521 ms  (  0.543% of 28 ms)
+  N=  250:   0.6861 ms  (  2.450% of 28 ms)
+  N=  500:   3.0977 ms  ( 11.063% of 28 ms)
+  N= 1000:  15.1300 ms  ( 54.036% of 28 ms)
