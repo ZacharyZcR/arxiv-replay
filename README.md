@@ -28,6 +28,20 @@
 | `C_struct` 结构代理替代 JSD 路由 | CRISP | **未验证，增量优化** | 去掉 pooling 与 KL 计算，路由一致率 94.0%–88.1% | 同上 | 评估 2026-09-05 |
 | 模型自声明注意力范围 + block table 重写 | DA | **未验证，数字存疑** | 声称 attended tokens 减少 31–52%，精度降 1.27–2.75pp | wall-clock 为 roofline 估算而非实测，且排除 prefill；global 模式占 80%+ attended tokens 且随上下文增长；多跑约 33% decode step；不兼容 thinking mode；小模型完全失效；无 batching 实验；无代码 | 评估 2026-09-05 |
 | hook attention metadata builder 改写 block table（作为集成路径） | DA | **有效的集成方式** | 不改 kernel、不改 scheduler；vLLM V1 有 `supports_update_block_table` 原生路径 | 这是对「集成成本」的判定，与该方法本身的收益无关 | 评估 2026-09-05 |
+| Leech 格多壳解码 + 展开式 VRAM 布局（2-bit 权重） | LLVQ | **不实用** | L40S 上 2.15× vs FP16，但 **MMLU 掉 14.7 点**、perplexity ×1.384 | 论文自陈 QTIP 2-bit 读少 2.40× 字节且快 2.27×；A100 上「every lattice arm falls below FP16」；目标场景 70B 未测 | 评估 2026-09-05 |
+
+## 方法论笔记
+
+评估过程中值得沉淀的通用经验，与具体技术无关。
+
+| 经验 | 来源 | 说明 |
+|---|---|---|
+| **跨推理栈的加速比不能相除** | LLVQ 的正面示范 / hLLM 的反面教材 | LLVQ 作者自建栈 FP16 基线 43.5 tok/s，vLLM 是 83.09——他主动披露自己慢近一倍，并拒绝跨栈做除法。对照 hLLM 用被自己数据证伪的配置当分母报出 64× |
+| **加速比先看分母是什么** | hLLM | 论文报 64×（vs 带 reasoning trace 的 1807 ms）。而它自己表里去掉 trace 的配置是 88 ms 且质量相同——对齐质量后真实加速 3.1× |
+| **区分 roofline 估算与实测** | DA | 有 vLLM 实现却只报 roofline 估算（且排除 prefill），通常意味着实测数字不好看 |
+| **VRAM rate ≠ on-disk rate** | LLVQ | 2-bit 存储不等于 2-bit 显存占用；展开后实际 3.59–5.51 b/weight。评估量化方案须分开看 |
+| **量化 kernel 的收益会随硬件翻转** | LLVQ | 同一方法在带宽受限的 L40S 上 2.15×，在带宽更高的 A100 上全线低于 FP16——瓶颈从访存变为指令发射。只报单卡数字要警惕 |
+| **没跑过就标「评估」** | 本仓库规矩 | 分不清自己验证过什么和只是读过什么，索引表就废了 |
 
 ## 论文清单
 
@@ -36,6 +50,7 @@
 | [hLLM: Single Pass Decoding for Generative Reranking](https://arxiv.org/abs/2609.01807)<br/>Meta, 2026 | 已复现，已归档 | [`hllm/`](hllm/) | 有效的部分（prefill-only 解码）是 vLLM 早有的成熟能力，论文冠名的匈牙利指派实测无效 |
 | [CRISP: Cliff-awaRe Input-adaptive Sparse Prefilling](https://arxiv.org/abs/2609.01925)<br/>Adobe Research, EMNLP 2026 | 仅评估 | [`triage/crisp-2609.01925.md`](triage/crisp-2609.01925.md) | 无代码无引擎集成；attention-only 单序列口径；产业界已转向原生稀疏注意力（DSA） |
 | [Language Models Can Control Their Own Attention](https://arxiv.org/abs/2609.02737)<br/>KAIST AI + Google DeepMind, 2026 | 仅评估 | [`triage/da-2609.02737.md`](triage/da-2609.02737.md) | 集成路径是看过最干净的，但收益全是 roofline 估算，且上下文越长节省越少 |
+| [Unfolding the Leech Lattice（2-bit 量化）](https://arxiv.org/abs/2609.02652)<br/>Scub, 2026, preprint | 仅评估 | [`triage/llvq-2609.02652.md`](triage/llvq-2609.02652.md) | 方法不实用（MMLU 掉 14.7 点、换卡即失效、输给 QTIP），但论文的方法论严谨度是评估过的所有论文中最高的 |
 
 ## 说明
 
